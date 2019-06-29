@@ -1,0 +1,102 @@
+﻿@using EVotingSystem.Services
+@model PaginatedList<EVotingSystem.Models.State>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h1>States</h1>
+<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get">
+            <input class="au-input au-input--xl" type="text" name="SearchString" value="@ViewData["currentFilter"]" placeholder="Search..." />
+            <button class="btn btn-primary" type="submit">
+                <i class="zmdi zmdi-search"></i>
+            </button>
+                      
+        </form>
+        
+    </div> 
+    <div class="col-md-6">
+        <a class="btn btn-outline-primary btn-sm" asp-action="Index">Back to Full List</a>        
+        &nbsp;&nbsp;
+        <a class="btn btn-outline-primary btn-sm" asp-action="Create">Create New</a>    
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]"
+                             asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                Name
+                            </a>
+
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="tr-shadow">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <div class="table-data-feature">
+
+                                    <a class="item" asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </a>
+
+                                    <a class="item" asp-action="Details" asp-route-id="@item.Id">
+                                        <i class="zmdi zmdi-info"></i>
+                                    </a>
+
+                                    <a class="item" asp-action="Delete" asp-route-id="@item.Id">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </a>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr class="spacer"></tr>
+                    }
+
+                    <tr></tr>
+                    <tr class="spacer"></tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+

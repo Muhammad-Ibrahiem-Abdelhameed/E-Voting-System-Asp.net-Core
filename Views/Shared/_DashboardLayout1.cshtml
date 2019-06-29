@@ -1,0 +1,295 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>E-Voting Dashboard</title>
+
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">E-Voting System</div>
+            </a>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a asp-controller="Dashboard" asp-action="Index" class="nav-link">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="States" asp-action="Index" data-toggle="collapse" data-target="#collapseStates" aria-expanded="true" aria-controls="collapseStates">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>States</span>
+                </a>
+                <div id="collapseStates" class="collapse" aria-labelledby="headingStates" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" asp-controller="States" asp-action="Index">All States</a>
+                        <a class="collapse-item" asp-controller="States" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Votes" asp-action="Index" data-toggle="collapse" data-target="#collapseVotes" aria-expanded="true" aria-controls="collapseVotes">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Votes</span>
+                </a>
+                <div id="collapseVotes" class="collapse" aria-labelledby="headingVotes" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" asp-controller="Votes" asp-action="Index">All Votes</a>
+                        <a class="collapse-item" asp-controller="Votes" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Candidates" asp-action="Index" data-toggle="collapse" data-target="#collapseCandidates" aria-expanded="true" aria-controls="collapseCandidates">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Candidates</span>
+                </a>
+                <div id="collapseCandidates" class="collapse" aria-labelledby="headingCandidates" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" asp-controller="Candidates" asp-action="Index">All Candidates</a>
+                        <a class="collapse-item" asp-controller="Candidates" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseUsersVoters" aria-expanded="true" aria-controls="collapseUsersVoters">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Users and Votes</span>
+                </a>
+                <div id="collapseUsersVoters" class="collapse" aria-labelledby="headingUsersVoters" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" asp-controller="UsersVoters" asp-action="Index">Users and Voters</a>
+                        <a class="collapse-item" asp-controller="UsersVoters" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="VoterVotes" asp-action="Index" data-toggle="collapse" data-target="#collapseVoterVotes" aria-expanded="true" aria-controls="collapseVoterVotes">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Voters and Votes</span>
+                </a>
+                <div id="collapseVoterVotes" class="collapse" aria-labelledby="headingVoterVotes" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" asp-controller="VoterVotes" asp-action="Index">Voter Votes</a>
+                        <a class="collapse-item" asp-controller="VoterVotes" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-controller="Results" asp-action="Index" data-toggle="collapse" data-target="#collapseResults" aria-expanded="true" aria-controls="collapseResults">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Results</span>
+                    </a>
+                    <div id="collapseResults" class="collapse" aria-labelledby="headingResults" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Custom Utilities:</h6>
+                            <a class="collapse-item" asp-controller="Results" asp-action="Index">All Results</a>
+                            <a class="collapse-item" asp-controller="Results" asp-action="Create">Create New</a>
+
+                        </div>
+                    </div>
+                </li>
+            }
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Users" asp-action="Index" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Users</span>
+                </a>
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingUserVotes" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" asp-controller="Users" asp-action="Index">All Users</a>
+                        <a class="collapse-item" asp-controller="Users" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Voters" asp-action="Index" data-toggle="collapse" data-target="#collapseVoters" aria-expanded="true" aria-controls="collapseVoters">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Voters</span>
+                </a>
+                <div id="collapseVoters" class="collapse" aria-labelledby="headingVotes" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" asp-controller="Voters" asp-action="Index">All Voters</a>
+                        <a class="collapse-item" asp-controller="Voters" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Admins
+            </div>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="SupervisorsVotes" asp-action="Index" data-toggle="collapse" data-target="#collapseSupervisorsVotes" aria-expanded="true" aria-controls="collapseSupervisorsVotes">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Supervisors and Votes</span>
+                </a>
+                <div id="collapseSupervisorsVotes" class="collapse" aria-labelledby="headingSupervisorsVotes" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" asp-controller="SupervisorsVotes" asp-action="Index">All Admin</a>
+                        <a class="collapse-item" asp-controller="SupervisorsVotes" asp-action="Create">Create New</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <partial name="_TopNavbarDashboard" />
+                <div class="container">
+                    <partial name="_CookieConsentPartial" />
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2019</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="nav-link btn btn-primary">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <!--<script src="~/js/site.js" asp-append-version="true"></script>-->
+    <script src="~/js/sb-admin-2.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
