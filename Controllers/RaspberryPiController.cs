@@ -76,34 +76,7 @@ namespace EVotingSystem.Controllers
             }
             return Unauthorized();
         }        
-
-        /*[Route("Register")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]        
-        public async Task<ActionResult> RegisterFingerprint([FromForm] IFormFile fingerprint)
-        {
-            //var userId = User.Identity.Name;
-            var voter = await _context.Voters.FindAsync(User.Identity.Name);
-            var filePath = _hostingEnvironment.ContentRootPath + "\\AppData\\Fingerprints\\";
-
-            //var file = Request.Form.Files[0];
-            if (fingerprint.Length > 0)
-            {
-                filePath += voter.Id;
-                
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {                    
-                    await fingerprint.CopyToAsync(stream);
-                }
-                voter.Fingerprint = filePath;
-                _context.Voters.Update(voter);
-                await _context.SaveChangesAsync();
-                return Ok(new { result = "Thanks" });
-            }
-            
-            return Ok(new { Error = "Error" });
-        }*/        
-
+               
         [Route("RegisterFingerprint")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
@@ -181,7 +154,8 @@ namespace EVotingSystem.Controllers
                         {
                             Id = c.Id,
                             ListNumber = c.ListNumber,
-                            Name = c.Name
+                            Name = c.Name,
+                            Picture = c.Picture
                         })
                         .ToListAsync()
                 };
@@ -228,7 +202,8 @@ namespace EVotingSystem.Controllers
         {
             public string Id { get; set; }
             public int ListNumber { get; set; }
-            public string Name { get; set; }            
+            public string Name { get; set; }
+            public string Picture { get; set; }
         }        
 
         public class VoteResult
@@ -242,5 +217,32 @@ namespace EVotingSystem.Controllers
         {
             public string Fingerprint { get; set; }            
         }
+
+        /*[Route("Register")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]        
+        public async Task<ActionResult> RegisterFingerprint([FromForm] IFormFile fingerprint)
+        {
+            //var userId = User.Identity.Name;
+            var voter = await _context.Voters.FindAsync(User.Identity.Name);
+            var filePath = _hostingEnvironment.ContentRootPath + "\\AppData\\Fingerprints\\";
+
+            //var file = Request.Form.Files[0];
+            if (fingerprint.Length > 0)
+            {
+                filePath += voter.Id;
+                
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {                    
+                    await fingerprint.CopyToAsync(stream);
+                }
+                voter.Fingerprint = filePath;
+                _context.Voters.Update(voter);
+                await _context.SaveChangesAsync();
+                return Ok(new { result = "Thanks" });
+            }
+            
+            return Ok(new { Error = "Error" });
+        }*/
     }
 }

@@ -8,7 +8,7 @@
 <h1>Voter Votes</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-outline-primary btn-sm btn-new" asp-action="Create" >Create New</a>
 </p>
 <div class="row">
     <div class="col-md-12">
@@ -25,12 +25,12 @@
                         <th>
                             @Html.DisplayNameFor(model => model.IsVoted)
                         </th>
-                        <th>
+                        <!--<th>
                             @Html.DisplayNameFor(model => model.SignedInTime)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.LoggedOutTime)
-                        </th>
+                        </th>-->
 
                         <th></th>
                     </tr>
@@ -49,12 +49,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.IsVoted)
                         </td>
-                        <td>
+                        <!--<td>
                             @Html.DisplayFor(modelItem => item.SignedInTime)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.LoggedOutTime)
-                        </td>
+                        </td>-->
                         <td>
                             <div class="table-data-feature">
 

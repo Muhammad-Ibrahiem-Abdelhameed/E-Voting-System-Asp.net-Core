@@ -71,12 +71,21 @@ namespace EVotingSystem.Controllers
             if(voteId != null)
             {
                 TempData["voteId"] = voteId;
+
+                // encrypt data
+                var timeExpire = DateTime.Now.AddMinutes(30).ToString();
+                var encrypt = new Encrypt();
+                var cipherText = encrypt.EncryptString(timeExpire, "e voting system");
+
+                await _emailSender.SendEmailAsync(
+                    HttpContext.User.Identity.Name, "Confirm Vote", cipherText);
+
                 return RedirectToAction(nameof(Vote), new { voteId });
             }
             var votes = _context.Voters
                     .Include(v => v.ApplicationUser)
-                    .Where(vv => vv.ApplicationUser.Id == _userManager.GetUserId(HttpContext.User));
-                    
+                    .Where(vv => vv.ApplicationUser.Id == _userManager.GetUserId(HttpContext.User));            
+
             // Temp Data
             ViewData["Votes"] = new SelectList(await votes.ToListAsync(), "Id", "Title", voteId);
             return RedirectToAction(nameof(Vote), "Id");
@@ -95,31 +104,25 @@ namespace EVotingSystem.Controllers
             var candidates = _context.Candidates
                 .Include(c => c.Vote)
                 .Where(c => c.VoteId == voteId);
-
-            var timeExpire = DateTime.Now.AddMinutes(10).ToString();
-
-            /*var outputKey = ProtectedData.Protect( Encoding.Unicode.GetBytes(timeExpire), null, DataProtectionScope.CurrentUser);
-            var outstring = Convert.ToBase64String(outputKey);
-            ViewData["Expire"] = outstring;
-            ViewData["Ex"] = Encoding.Unicode.GetString(
-                                ProtectedData.Unprotect(outputKey, null,
-                                DataProtectionScope.CurrentUser) );*/
-
-            var encrypt = new Encrypt();
-            var outstring = encrypt.EncryptString(timeExpire, "P");
             
-            //ViewData["Expire"] = outstring;
-            //ViewData["Ex"] = encrypt.DecryptString(outstring, "P");
             return View(await candidates.ToListAsync());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Vote()
-        {
+        {            
             var candId = Request.Form["Id"];
-            
-            if (candId != "")
+            var encrypt = new Encrypt();
+            var clearText = encrypt.DecryptString(Request.Form["confirmCode"], "e voting system");
+            var time = Convert.ToDateTime(clearText);
+
+            if(DateTime.Now > time)
+            {
+                RedirectToAction("Index", "Voting");
+            }
+
+            if (!String.IsNullOrEmpty(candId) || !String.IsNullOrWhiteSpace(candId) )
             {                
                 try
                 {
@@ -161,12 +164,7 @@ namespace EVotingSystem.Controllers
         private bool CandidateExists(string id)
         {
             return _context.Candidates.Any(e => e.Id == id);
-        }
-
-        /*private bool IsVoted(string id)
-        {
-            return _context.V.Any(e => e.Id == id);
-        }*/
+        }        
 
         public class Encrypt
         {

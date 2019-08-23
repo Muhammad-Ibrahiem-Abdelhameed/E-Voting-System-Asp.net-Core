@@ -3,78 +3,49 @@
 @{
     ViewData["Title"] = "Register";
 }
+<div class="page-wrapper">
+    <div class="page-content--bge5">
+        <div class="container">
+            <div class="login-wrap">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <h2>Register</h2>
+                    </div>
+                    <div class="login-form">
+                        <form  method="post">
+                            <div asp-validation-summary="All" class="alert alert-light" role="alert"></div>
 
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <form class="login100-form validate-form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <span class="login100-form-title p-b-26">
-                    Register
-                </span>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-
-                <!--<div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" name="username">
-                    <span class="focus-input100" data-placeholder="username"></span>
-                </div>-->
-
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" asp-for="Input.Email">
-                    <span class="focus-input100" data-placeholder="e-mail"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <input class="input100" type="password" asp-for="Input.Password">
-                    <span class="focus-input100" data-placeholder="Password"></span>
-                </div>
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <span class="btn-show-pass">
-                        <i class="zmdi zmdi-eye"></i>
-                    </span>
-                    <input class="input100" type="password" asp-for="Input.ConfirmPassword">
-                    <span class="focus-input100" data-placeholder="re-Password"></span>
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button type="submit" class="login100-form-btn">
-                            submit
-                        </button>
+                            <div class="form-group validate-input">
+                                <label>Email</label>
+                                <input asp-for="Input.Email" class="au-input au-input--full" type="email"  placeholder="Email">
+                            </div>
+                        
+                            <div class="form-group validate-input" data-validate="Enter password">
+                                <label>Password</label>
+                                <input asp-for="Input.Password" class="au-input au-input--full" type="password" placeholder="Password">
+                            </div>
+                            
+                            <div class="form-group validate-input" data-validate="Enter password">
+                                <label>Re-Enter Password</label>
+                                <input asp-for="Input.ConfirmPassword" class="au-input au-input--full" type="password" placeholder="Password">
+                            </div>
+                            
+                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
+                            
+                        </form>
+                        <div class="register-link">
+                            <p>
+                                Already have account?
+                                <a asp-page="./login" asp-route-returnUrl="@Model.ReturnUrl">Sign In</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
+
 </div>
-
-
-<!--<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-    </div>
-</div>-->
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

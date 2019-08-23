@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="au-card m-b-30">
+            <div class="au-card-inner">
+                <h3 class="title-2 m-b-40">Candidates Percentage</h3>
+                <div id="pieChart"></div>
+                <div id="pieChartContent1" style="display:none">@ViewBag.CandidateNames</div>
+                <div id="pieChartContent2" style="display:none">@ViewBag.CurrentVoted</div>
+            </div>
+        </div>
+        <div class="au-card m-b-30">
+            <div class="au-card-inner">
+                <h3 class="title-2 m-b-40">Top States</h3>
+                <div id="barChart"></div>
+                <div id="barChartContent1" style="display:none">@ViewBag.StatesNames</div>
+                <div id="barChartContent2" style="display:none">@ViewBag.StatesVoted</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="au-card m-b-30">
+            <div class="au-card-inner">
+                <h3 class="title-2 m-b-40">Attendance</h3>
+                <div id="cirChart"></div>
+                <div id="cirChartContent1" style="display:none">@ViewBag.PreVoters</div>
+                <div id="cirChartContent2" style="display:none">@ViewBag.AbsVoters</div>
+            </div>
+        </div>
+    </div>
+</div>

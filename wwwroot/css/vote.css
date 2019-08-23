@@ -1,0 +1,46 @@
+
+.votecat {
+    text-align: center;
+    background-color: white;
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 30px 0;
+    box-shadow: 5px 5px 18px;
+
+}
+.votecat h3{
+    font-style: italic;
+}
+
+.sel {
+    width: 60%;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.btnvo {
+    margin: left;
+}
+.elec{
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin: 15px 0;
+
+}
+
+.votecat .elec .elecimg{
+    width: 50px;
+    margin-left: 10px;
+    border-radius: 15px;
+    
+}
+
+
+.votecat .elec .elecname{
+    display: inline-block;
+    margin: 0 50px 0 10px;
+    width: 35%;
+}
+
+
+

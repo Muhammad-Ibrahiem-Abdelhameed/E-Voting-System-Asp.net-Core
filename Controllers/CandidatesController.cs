@@ -66,19 +66,19 @@ namespace EVotingSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,VoteId,ListNumber,Name,Position,Picture,CurrentVoted")] Candidate candidate)
         {
-            var filePath = _hostingEnvironment.WebRootPath + "\\data\\candidates\\";
+            var filePath = _hostingEnvironment.WebRootPath + "\\images\\candidates\\";
             
             if (ModelState.IsValid && Request.Form.Files.Count != 0)
             {
                 var file = Request.Form.Files[0];
                 if (file.Length > 0)
-                {
-                    using (var stream = new FileStream(filePath + file.FileName, FileMode.Create))
+                {                    
+                    using (var stream = new FileStream(filePath + candidate.Name + ".jpg", FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
                 }
-                candidate.Picture = "~/data/candidates/" + candidate.Name;
+                candidate.Picture = "~/images/candidates/" + candidate.Name + ".jpg";
                 _context.Add(candidate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

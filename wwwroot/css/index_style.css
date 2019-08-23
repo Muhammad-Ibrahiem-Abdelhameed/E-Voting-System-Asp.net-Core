@@ -1,0 +1,30 @@
+nav{
+    position: fixed;
+    top: 0;
+}
+#homepage{
+    background: url("../images/header.jpg");
+    height: 100vh;
+    background-size:cover;
+    background-position: center center;
+    text-align: center;
+    
+}
+#homepage .cont{
+    margin-top: 15%;
+    color: white;
+    letter-spacing: 1px;
+    font-style: italic;
+    font-weight: 600;
+}
+#homepage .cont .head{
+    width: 50%;
+    margin: auto;
+
+}
+
+hr{
+    width: 70%;
+    background-color: white;
+    margin:30px auto;
+}

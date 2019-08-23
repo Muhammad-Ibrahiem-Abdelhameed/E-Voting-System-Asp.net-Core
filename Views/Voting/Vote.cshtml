@@ -5,30 +5,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="vote.css">
 
-<div class="votecontainer">
+<div class="card" style="margin-bottom:0;">
 
+    <div class="card-header">
+        <h3>
+        Select One Candidate
+        </h3>
+    </div>
+    <form asp-action="Vote" class="votecat">
+        <div class="card-body">
 
-    <form asp-action="Vote" class="votecat col-md-7 col-11">
+                <div class="elec table-responsive table--no-card m-b-30">
+                    
+                    <table class="table table-borderless table-striped table-earning">
+                        <thead>
+                            <tr>
+                                <th><strong>Name</strong></th>
+                                <th><strong>Image</strong></th>
+                                <th><strong>Select</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td><h4 class="elecname">@Html.DisplayFor(modelItem => item.Name)</h4></td>                            
+                                <td><img class="elecimg rounded" src="@item.Picture" alt="" asp-append-version="true"></td>
+                                <td>
+                                    <label class="au-checkbox">
+                                        @Html.RadioButton("Id", item.Id, new { @style = "radio" })
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            }
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
 
-
-        @foreach (var item in Model)
-        {
-            <div class="elec">
-                @Html.RadioButton("Id", item.Id, new { @style = "radio" })
-                <img class="elecimg" src="karem.jpg" alt="">
-                <h4 class="elecname">@Html.DisplayFor(modelItem => item.Name)</h4>
+            <div class="form-group">
+                <label class="control-label" for="confirmCode">
+                    <strong>Confirmation Code</strong>
+                </label>
+                <input class="form-control" type="text"  name="confirmCode" id="confirmCode"/>
             </div>
-            <!--<div class="form-group">
-                @Html.RadioButton("Id", item.Id, new { @style = "radio" })
-                <span>&nbsp;</span>
-                @Html.DisplayFor(modelItem => item.Name)
-            </div>-->
-        }
-
-        <div class="form-group">
-            <input type="submit" value="Vote" class="btn btn-primary btn-lg" />
+        </div>
+        <div class="card-footer">
+            <div class="form-group">
+                <input type="submit" value="Vote" class="btn btn-primary btn-lg" />
+            </div>
         </div>
     </form>
 
